@@ -28,7 +28,7 @@ public class main {
 	CommonTokenStream tokens = new CommonTokenStream(lex);
 	
 	// create a parser
-	progParser parser = new progParser(tokens);
+	ccParser parser = new ccParser(tokens);
 	
 	// and parse anything from the grammar for "start"
 	ParseTree parseTree = parser.start();
@@ -51,87 +51,98 @@ class Interpreter extends AbstractParseTreeVisitor<Double>
     // implement "implVisitor" at the moment.
 
 
-	public String visitStart(progParser.StartContext ctx){
-	    return visit(ctx.e);
+	public String visitStart(ccParser.StartContext ctx){
+	    return visit(ctx.hw, ctx.in, ctx.out, ctx.lat, ctx.de, ctx.up, ctx.sim);
 	}
 
 
-	public String visitAndExp(progpParser.AndExpContext ctx){
+	public String visitAndExp(ccParser.AndExpContext ctx){
+		String s1 = visit(ctx.e1);
+		String s2 = visit(ctx.e2);
+
+		return s1+" * "+s2;
+	}
+	public String visitAssignExp(ccParser.AssignExpContext ctx){
+		String s1 = visit(ctx.x);
+		String s2 = visit(ctx.e1);
+		return s1+" = "+s2;
+	}
+	public String visitAssignFunction(ccParser.AssignFunctionContext ctx){
+		String s1 = visit(ctx.f);
+		String s2 = visit(ctx.s);
 		return "";
 	}
-	public String visitAssignExp(progpParser.AssignExpContext ctx){
+	public String visitAssignIdentFunc(ccParser.AssignIdentFuncContext ctx){
+		String s1 = visit(ctx.f);
+		String s2 = visit(ctx.x);
 		return "";
 	}
-	public String visitAssignFunction(progpParser.AssignFunctionContext ctx){
+	public String visitBlockStatement(ccParser.BlockStatementContext ctx){
+		String s1 = visit(ctx.s);
+		return "{"+s1+"}";
+	}
+	public String visitConstExp(ccParser.ConstExpContext ctx){
+		String s1 = visit(ctx.n);
 		return "";
 	}
-	public String visitAssignIdentFunc(progpParser.AssignIdentFuncContext ctx){
+	public String visitDef(ccParser.DefContext ctx){
 		return "";
 	}
-	public String visitBlockStatement(progpParser.BlockStatementContext ctx){
+	public String visitExp(ccParser.ExpContext ctx){
 		return "";
 	}
-	public String visitConstExp(progpParser.ConstExpContext ctx){
+	public String visitExpressionList(ccParser.ExpressionsListContext ctx){
 		return "";
 	}
-	public String visitDef(progpParser.DefContext ctx){
+	public String visitExps(ccParser.ExpsContext ctx){
 		return "";
 	}
-	public String visitExp(progpParser.ExpContext ctx){
+	public String visitFuncAssign(ccParser.FuncAssignContext ctx){
 		return "";
 	}
-	public String visitExpressionList(progpParser.ExpressionListContext ctx){
+	public String visitFunc(ccParser.FuncContext ctx){
 		return "";
 	}
-	public String visitExps(progpParser.ExpsContext ctx){
+	public String visitFunctionCall(ccParser.FunctionCallContext ctx){
 		return "";
 	}
-	public String visitFuncAssign(progpParser.FuncAssignContext ctx){
+	public String visitIdentExp(ccParser.IdentExpContext ctx){
 		return "";
 	}
-	public String visitFunc(progpParser.FuncContext ctx){
+	public String visitInputs(ccParser.InputsContext ctx){
 		return "";
 	}
-	public String visitFunctionCall(progpParser.FunctionCallContext ctx){
+	public String visitLatches(ccParser.LatchesContext ctx){
 		return "";
 	}
-	public String visitIdentExp(progpParser.IdentExpContext ctx){
+	public String visitName(ccParser.NameContext ctx){
 		return "";
 	}
-	public String visitInputs(progpParser.InputsContext ctx){
+	public String visitNotExp(ccParser.NotExpContext ctx){
 		return "";
 	}
-	public String visitLatches(progpParser.LatchesContext ctx){
+	public String visitOrExp(ccParser.OrExpContext ctx){
 		return "";
 	}
-	public String visitName(progpParser.NameContext ctx){
+	public String visitOutputs(ccParser.OutputsContext ctx){
 		return "";
 	}
-	public String visitNotExp(progpParser.NotExpContext ctx){
+	public String visitParenthesizedExp(ccParser.ParenthesizedExpContext ctx){
 		return "";
 	}
-	public String visitOrExp(progpParser.OrExpContext ctx){
+	public String visitPlusExp(ccParser.PlusExpContext ctx){
 		return "";
 	}
-	public String visitOutputs(progpParser.OutputsContext ctx){
+	public String visitSiminputs(ccParser.SiminputsContext ctx){
 		return "";
 	}
-	public String visitParenthesizedExp(progpParser.ParenthesizedExpContext ctx){
+	public String visitSingleArgFunctionCall(ccParser.SingleArgFunctionCallContext ctx){
 		return "";
 	}
-	public String visitPlusExp(progpParser.PlusExpContext ctx){
+	public String visitStmt(ccParser.StmtContext ctx){
 		return "";
 	}
-	public String visitSiminputs(progpParser.SiminputsContext ctx){
-		return "";
-	}
-	public String visitSingleArgFunctionCall(progpParser.SingleArgFunctionCallContext ctx){
-		return "";
-	}
-	public String visitStmt(progpParser.StmtContext ctx){
-		return "";
-	}
-	public String visitUpdates(progpParser.UpdatesContext ctx){
+	public String visitUpdates(ccParser.UpdatesContext ctx){
 		return "";
 	}
 
@@ -139,11 +150,11 @@ class Interpreter extends AbstractParseTreeVisitor<Double>
 /*
  *Det her er fra undervisningen
  *
-	public Double visitVariable(progParser.VariableContext ctx){
+	public Double visitVariable(ccParser.VariableContext ctx){
 	    System.err.println("Variables are not yet supported.\n");
 	    System.exit(-1);
 	    return null; }
-	public Double visitAddSub(progParser.AddSubContext ctx){
+	public Double visitAddSub(ccParser.AddSubContext ctx){
 	    // e1=exp op=('+'|'-') e2=exp
 	    System.out.println("Addition/Subtraction");
 	    Double d1=visit(ctx.e1);
@@ -157,13 +168,13 @@ class Interpreter extends AbstractParseTreeVisitor<Double>
 		return d1-d2;
 	    }
 	}
-	public Double visitConstant(progParser.ConstantContext ctx){
+	public Double visitConstant(ccParser.ConstantContext ctx){
 	    String s=ctx.f.getText();
 	    System.out.println("Constant "+s);
 	    return Double.valueOf(s);
 	}
-	public Double visitParen(progParser.ParenContext ctx){ return visit(ctx.e); }
-	public Double visitMultDiv(progParser.MultDivContext ctx){
+	public Double visitParen(ccParser.ParenContext ctx){ return visit(ctx.e); }
+	public Double visitMultDiv(ccParser.MultDivContext ctx){
 	    System.out.println("Mult/Div");
 	    Double d1=visit(ctx.e1);
 	    Double d2=visit(ctx.e2);
@@ -178,7 +189,7 @@ class Interpreter extends AbstractParseTreeVisitor<Double>
 
  */
     
-	}
+	//}
 
 
 }
