@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html><head><title>Hardware Specification</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head><body>
+<h1>vonNeumannAdder</h1>
+<h2>Inputs</h2>
+Read<br>
+a0<br>
+a1<br>
+a2<br>
+a3<br>
+b0<br>
+b1<br>
+b2<br>
+b3<br>
+<h2>Outputs</h2>
+s0<br>
+s1<br>
+s2<br>
+s3<br>
+Overflow<br>
+<h2>Latches</h2>
+ma0<br>
+ma1<br>
+ma2<br>
+ma3<br>
+mb0<br>
+mb1<br>
+mb2<br>
+mb3<br>
+Overflow<br>
+<h2>Definitions</h2>
+\(\mathit{xor(a,b)} = null\)<br>
+<h2>Definitions</h2>
+\(\mathit{mux(a,b,c)} = null\)<br>
+<h2>Updates</h2>
+\( \mathrm{s0} \leftarrow \mathit{xor}(\mathrm{ma0'}, \mathrm{mb0'}) \)<br>
+\( \mathrm{s1} \leftarrow \mathit{xor}(\mathrm{ma1'}, \mathrm{mb1'}) \)<br>
+\( \mathrm{s2} \leftarrow \mathit{xor}(\mathrm{ma2'}, \mathrm{mb2'}) \)<br>
+\( \mathrm{s3} \leftarrow \mathit{xor}(\mathrm{ma3'}, \mathrm{mb3'}) \)<br>
+\( \mathrm{c0} \leftarrow null \)<br>
+\( \mathrm{c1} \leftarrow null \)<br>
+\( \mathrm{c2} \leftarrow null \)<br>
+\( \mathrm{c3} \leftarrow null \)<br>
+\( \mathrm{Overflow} \leftarrow \mathit{mux}(\mathrm{c3}, \mathrm{Overflow'}, \mathrm{Read}) \)<br>
+\( \mathrm{ma0} \leftarrow \mathit{mux}(\mathrm{a0}, \mathrm{s0}, \mathrm{Read}) \)<br>
+\( \mathrm{ma1} \leftarrow \mathit{mux}(\mathrm{a1}, \mathrm{s1}, \mathrm{Read}) \)<br>
+\( \mathrm{ma2} \leftarrow \mathit{mux}(\mathrm{a2}, \mathrm{s2}, \mathrm{Read}) \)<br>
+\( \mathrm{ma3} \leftarrow \mathit{mux}(\mathrm{a3}, \mathrm{s3}, \mathrm{Read}) \)<br>
+\( \mathrm{zero} \leftarrow null \)<br>
+\( \mathrm{mb0} \leftarrow \mathit{mux}(\mathrm{b0}, \mathrm{zero}, \mathrm{Read}) \)<br>
+\( \mathrm{mb1} \leftarrow \mathit{mux}(\mathrm{b1}, \mathrm{c0}, \mathrm{Read}) \)<br>
+\( \mathrm{mb2} \leftarrow \mathit{mux}(\mathrm{b2}, \mathrm{c1}, \mathrm{Read}) \)<br>
+\( \mathrm{mb3} \leftarrow \mathit{mux}(\mathrm{b3}, \mathrm{c2}, \mathrm{Read}) \)<br>
+<h2>Simulation Inputs</h2>
+<b>Read</b>: 100000000<br>
+<b>a0</b>: 100000000<br>
+<b>a1</b>: 000000000<br>
+<b>a2</b>: 000000000<br>
+<b>a3</b>: 000000000<br>
+<b>b0</b>: 100000000<br>
+<b>b1</b>: 100000000<br>
+<b>b2</b>: 100000000<br>
+<b>b3</b>: 000000000<br>
+</body></html>
+
