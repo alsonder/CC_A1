@@ -21,9 +21,9 @@ updates     : 'updates:' st+=stmt+ ;
 siminputs   : 'siminputs:' st+=stmt+ ; 
 
 stmt
-    : f=func '=' s=stmt       # AssignFunction
-    | f=func '=' e1=exp		#FuncAssign
-    | x=IDENT '=' e1=exp       # AssignExp
+    : f=func '=' s=stmt     # AssignFunction
+    | f=func '=' e1=exp		# FuncAssign
+    | x=IDENT '=' e1=exp    # AssignExp
     | x=IDENT '=' f=func    # AssignIdentFunc
     ;
 

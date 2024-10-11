@@ -31,28 +31,27 @@ mb2<br>
 mb3<br>
 Overflow<br>
 <h2>Definitions</h2>
-\(\mathit{xor(a,b)} = null\)<br>
-<h2>Definitions</h2>
-\(\mathit{mux(a,b,c)} = null\)<br>
+\(\mathit{xor}(\mathrm{a}, \mathrm{b})=\mathrm{a}(\neg\mathrm{\mathrm{b}}\land \neg\mathrm{\mathrm{a}})\mathrm{b}\)<br>
+\(\mathit{mux}(\mathrm{a}, \mathrm{b}, \mathrm{c})=\mathrm{a}(\mathrm{c}\land \mathrm{b})\neg\mathrm{\mathrm{c}}\)<br>
 <h2>Updates</h2>
-\( \mathrm{s0} \leftarrow \mathit{xor}(\mathrm{ma0'}, \mathrm{mb0'}) \)<br>
-\( \mathrm{s1} \leftarrow \mathit{xor}(\mathrm{ma1'}, \mathrm{mb1'}) \)<br>
-\( \mathrm{s2} \leftarrow \mathit{xor}(\mathrm{ma2'}, \mathrm{mb2'}) \)<br>
-\( \mathrm{s3} \leftarrow \mathit{xor}(\mathrm{ma3'}, \mathrm{mb3'}) \)<br>
-\( \mathrm{c0} \leftarrow null \)<br>
-\( \mathrm{c1} \leftarrow null \)<br>
-\( \mathrm{c2} \leftarrow null \)<br>
-\( \mathrm{c3} \leftarrow null \)<br>
-\( \mathrm{Overflow} \leftarrow \mathit{mux}(\mathrm{c3}, \mathrm{Overflow'}, \mathrm{Read}) \)<br>
-\( \mathrm{ma0} \leftarrow \mathit{mux}(\mathrm{a0}, \mathrm{s0}, \mathrm{Read}) \)<br>
-\( \mathrm{ma1} \leftarrow \mathit{mux}(\mathrm{a1}, \mathrm{s1}, \mathrm{Read}) \)<br>
-\( \mathrm{ma2} \leftarrow \mathit{mux}(\mathrm{a2}, \mathrm{s2}, \mathrm{Read}) \)<br>
-\( \mathrm{ma3} \leftarrow \mathit{mux}(\mathrm{a3}, \mathrm{s3}, \mathrm{Read}) \)<br>
-\( \mathrm{zero} \leftarrow null \)<br>
-\( \mathrm{mb0} \leftarrow \mathit{mux}(\mathrm{b0}, \mathrm{zero}, \mathrm{Read}) \)<br>
-\( \mathrm{mb1} \leftarrow \mathit{mux}(\mathrm{b1}, \mathrm{c0}, \mathrm{Read}) \)<br>
-\( \mathrm{mb2} \leftarrow \mathit{mux}(\mathrm{b2}, \mathrm{c1}, \mathrm{Read}) \)<br>
-\( \mathrm{mb3} \leftarrow \mathit{mux}(\mathrm{b3}, \mathrm{c2}, \mathrm{Read}) \)<br>
+s0&larr;\(\mathit{xor}(\mathrm{ma0'}, \mathrm{mb0'})\)<br>
+s1&larr;\(\mathit{xor}(\mathrm{ma1'}, \mathrm{mb1'})\)<br>
+s2&larr;\(\mathit{xor}(\mathrm{ma2'}, \mathrm{mb2'})\)<br>
+s3&larr;\(\mathit{xor}(\mathrm{ma3'}, \mathrm{mb3'})\)<br>
+c0&larr;\(\mathrm{ma0'}\mathrm{mb0'}\)<br>
+c1&larr;\(\mathrm{ma1'}\mathrm{mb1'}\)<br>
+c2&larr;\(\mathrm{ma2'}\mathrm{mb2'}\)<br>
+c3&larr;\(\mathrm{ma3'}\mathrm{mb3'}\)<br>
+Overflow&larr;\(\mathit{mux}(\mathrm{c3}, \mathrm{Overflow'}, \mathrm{Read})\)<br>
+ma0&larr;\(\mathit{mux}(\mathrm{a0}, \mathrm{s0}, \mathrm{Read})\)<br>
+ma1&larr;\(\mathit{mux}(\mathrm{a1}, \mathrm{s1}, \mathrm{Read})\)<br>
+ma2&larr;\(\mathit{mux}(\mathrm{a2}, \mathrm{s2}, \mathrm{Read})\)<br>
+ma3&larr;\(\mathit{mux}(\mathrm{a3}, \mathrm{s3}, \mathrm{Read})\)<br>
+zero&larr;\(\mathrm{b0}\neg\mathrm{\mathrm{b0}}\)<br>
+mb0&larr;\(\mathit{mux}(\mathrm{b0}, \mathrm{zero}, \mathrm{Read})\)<br>
+mb1&larr;\(\mathit{mux}(\mathrm{b1}, \mathrm{c0}, \mathrm{Read})\)<br>
+mb2&larr;\(\mathit{mux}(\mathrm{b2}, \mathrm{c1}, \mathrm{Read})\)<br>
+mb3&larr;\(\mathit{mux}(\mathrm{b3}, \mathrm{c2}, \mathrm{Read})\)<br>
 <h2>Simulation Inputs</h2>
 <b>Read</b>: 100000000<br>
 <b>a0</b>: 100000000<br>

@@ -36,7 +36,7 @@ public class Main {
 class PrettyPrintVisitor extends AbstractParseTreeVisitor<String> implements ccVisitor<String> {
 
 	public StringBuilder htmlContent;
-
+	public boolean writeDef = true; //This is a stupid quickfix before deadline, to make sure <h2> Definitions </h2> is only written once total, instead of once for every def.
 	public PrettyPrintVisitor() {
 		htmlContent = new StringBuilder();
 		// Initialize the HTML content with necessary headers and boilerplate
@@ -94,10 +94,13 @@ class PrettyPrintVisitor extends AbstractParseTreeVisitor<String> implements ccV
 	@Override
 	public String visitDef(ccParser.DefContext ctx) {
 		// Display the definition in LaTeX format
-		String func = ctx.f.getText();
+		String func = visit(ctx.f);
 		String expression = visit(ctx.e);
-		htmlContent.append("<h2>Definitions</h2>\n");
-		htmlContent.append("\\(\\mathit{").append(func).append("} = ").append(expression).append("\\)<br>\n");
+		if(writeDef) {
+			htmlContent.append("<h2>Definitions</h2>\n");
+			writeDef = false;
+		}
+		htmlContent.append("\\(").append(func).append("=").append(expression).append("\\)<br>\n");
 		return null;
 	}
 
@@ -122,20 +125,24 @@ class PrettyPrintVisitor extends AbstractParseTreeVisitor<String> implements ccV
 
 	@Override
 	public String visitAssignFunction(ccParser.AssignFunctionContext ctx) {
-
-		return null;
+		String f = visit(ctx.f);
+		String s = visit(ctx.s);
+		return f+s;
 	}
 
 	@Override
 	public String visitFuncAssign(ccParser.FuncAssignContext ctx) {
-		return null;
+		String f = ctx.f.getText();
+		String e1 = visit(ctx.e1);
+		return "\\( \\mathrm{" + f + "} \\leftarrow " + e1 + " \\)";
 	}
 
 	@Override
 	public String visitAssignExp(ccParser.AssignExpContext ctx) {
 		String varName = ctx.x.getText();
 		String expr = visit(ctx.e1);
-		return "\\( \\mathrm{" + varName + "} \\leftarrow " + expr + " \\)";
+		return varName+"&larr;\\(" + expr + "\\)";
+		//return "\\( \\mathrm{" + varName + "} \\leftarrow " + expr + " \\)";
 	}
 
 	@Override
@@ -147,7 +154,9 @@ class PrettyPrintVisitor extends AbstractParseTreeVisitor<String> implements ccV
 
 
 	public String visitSingleArgFunctionCall(ccParser.SingleArgFunctionCallContext ctx) {
-		return null;
+		String x = ctx.x.getText();
+		String e1 = ctx.e1.getText();
+		return "\\mathrm{" + x + "}(" + e1 + ")";
 	}
 
 	@Override
@@ -164,32 +173,34 @@ class PrettyPrintVisitor extends AbstractParseTreeVisitor<String> implements ccV
 
 	@Override
 	public String visitPlusExp(ccParser.PlusExpContext ctx) {
-		return null;
+		String e1 = visit(ctx.e1);
+		String e2 = visit(ctx.e2);
+		return e1+e2;
 	}
 
 	@Override
 	public String visitNotExp(ccParser.NotExpContext ctx) {
-		return "(\\neg " + visit(ctx.e1) + ")";
+		return "\\neg\\mathrm{" + visit(ctx.e1)+"}";
 	}
 
 	@Override
 	public String visitAndExp(ccParser.AndExpContext ctx) {
-		return "(" + visit(ctx.e1) + " \\wedge " + visit(ctx.e2) + ")";
+		return "("+visit(ctx.e1) + "\\wedge " + visit(ctx.e2)+")";
 	}
 
 	@Override
 	public String visitOrExp(ccParser.OrExpContext ctx) {
-		return "(" + visit(ctx.e1) + " \\vee " + visit(ctx.e2) + ")";
+		return "("+visit(ctx.e1) + "\\land " + visit(ctx.e2) + ")";
 	}
 
 	@Override
 	public String visitIdentExp(ccParser.IdentExpContext ctx) {
-		return "\\mathrm{" + ctx.getText() + "}";
+		return "\\mathrm{"+ctx.x.getText()+"}";
 	}
 
 	@Override
 	public String visitConstExp(ccParser.ConstExpContext ctx) {
-		return ctx.getText();
+		return ctx.n.getText();
 	}
 
 	@Override
@@ -201,7 +212,7 @@ class PrettyPrintVisitor extends AbstractParseTreeVisitor<String> implements ccV
 	public String visitAssignIdentFunc(ccParser.AssignIdentFuncContext ctx) {
 		String varName = ctx.x.getText();
 		String funcCall = visit(ctx.f);
-		return "\\( \\mathrm{" + varName + "} \\leftarrow " + funcCall + " \\)";
+		return varName+"&larr;\\(" + funcCall + "\\)";
 	}
 
 }
