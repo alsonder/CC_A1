@@ -49,15 +49,15 @@ class PrettyPrintVisitor extends AbstractParseTreeVisitor<String> implements ccV
 
 	@Override
 	public String visitStart(ccParser.StartContext ctx) {
-		// Visit all children of the start rule to collect HTML content
+		// Visit all children of the start to go through the whole tree
 		visitChildren(ctx);
-		htmlContent.append("</body></html>\n"); // Close the HTML body and document
+		htmlContent.append("</body></html>\n"); // Close HTML body and document
 		return htmlContent.toString();
 	}
 
 	@Override
 	public String visitName(ccParser.NameContext ctx) {
-		//Add the name as an <H1> heading
+		//Add the name as heading
 		String name = ctx.IDENT().getText();
 		htmlContent.append("<h1>").append(name).append("</h1>\n");
 		return null;
